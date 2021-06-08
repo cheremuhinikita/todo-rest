@@ -10,7 +10,7 @@ Email: mikah42879@jmpant.com
 
 Password: 4nvE3A-ck9kNjd\\\*
 
-## Running the app using Node.js and Docker
+## Running the api using Node.js and Docker
 
 ```
 # installation
