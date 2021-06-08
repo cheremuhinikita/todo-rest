@@ -1,0 +1,48 @@
+import {
+	Connection,
+	EntitySubscriberInterface,
+	EventSubscriber,
+	InsertEvent,
+	RemoveEvent,
+	UpdateEvent,
+} from 'typeorm';
+
+import { generateHash } from '@common/utils/crypto.utils';
+
+import { User } from '../entities/user.entity';
+import { RedisCacheService } from '@common/modules/redis-cache/redis-cache.service';
+
+@EventSubscriber()
+export class UserSubscriber implements EntitySubscriberInterface<User> {
+	constructor(connection: Connection, private readonly redisCacheService: RedisCacheService) {
+		connection.subscribers.push(this);
+	}
+
+	listenTo(): typeof User {
+		return User;
+	}
+
+	async hashPassword(entity: User): Promise<void> {
+		entity.password = await generateHash(entity.password);
+	}
+
+	async beforeInsert({ entity }: InsertEvent<User>): Promise<void> {
+		await this.hashPassword(entity);
+	}
+
+	async beforeUpdate({ entity, databaseEntity }: UpdateEvent<User>): Promise<void> {
+		if (entity.password !== databaseEntity.password) await this.hashPassword(entity);
+	}
+
+	async afterInsert({ entity }: InsertEvent<User>): Promise<void> {
+		this.redisCacheService.set(entity.id, entity);
+	}
+
+	async afterUpdate({ entity }: UpdateEvent<User>): Promise<void> {
+		this.redisCacheService.set(entity.id, entity);
+	}
+
+	async afterRemove({ entityId }: RemoveEvent<User>): Promise<void> {
+		this.redisCacheService.del(entityId);
+	}
+}

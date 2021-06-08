@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+    client:
+        build:
+            dockerfile: Dockerfile
+            context: ./client
+            args:
+                REACT_APP_API_URL: ${REACT_APP_API_URL}
+        depends_on:
+            - api
+        env_file: .docker.env
+        environment:
+            - NGINX_PORT=${CLIENT_PORT}
+        ports:
+            - ${CLIENT_PORT}:${CLIENT_PORT}
+
+    api:
+        build:
+            dockerfile: Dockerfile
+            context: ./api
+        depends_on:
+            - postgres
+            - redis
+        env_file: .docker.env
+        environment:
+            - POSTGRES_HOST=postgres
+        ports:
+            - ${API_PORT}:${API_PORT}
+        networks:
+            - api-network
+
+    postgres:
+        image: postgres:12
+        env_file: .docker.env
+        ports:
+            - ${POSTGRES_PORT}:${POSTGRES_PORT}
+        networks:
+            - api-network
+
+    redis:
+        image: redis
+        ports:
+            - ${REDIS_PORT}:${REDIS_PORT}
+        networks:
+            - api-network
+
+networks:
+    api-network:
+        driver: bridge

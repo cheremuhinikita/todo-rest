@@ -1,0 +1,22 @@
+{
+	"name": "todo",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"format": "npm run format --prefix client && npm run format --prefix api",
+		"lint": "npm run lint --prefix client && npm run lint --prefix api",
+		"prepare": "husky install",
+		"precommit": "npm run format && npm run lint"
+	},
+	"repository": "git+https://github.com/m0jisto/todo.git",
+	"author": "Nikita <cheremuhinikita@mail.ru>",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/m0jisto/todo/issues"
+	},
+	"homepage": "https://github.com/m0jisto/todo#readme",
+	"devDependencies": {
+		"husky": "^6.0.0"
+	}
+}
