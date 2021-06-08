@@ -1,4 +1,4 @@
-### Todo app
+# Todo app
 
 Ensure that [Docker is installed](https://docs.docker.com/engine/install) on your work station
 
