@@ -6,7 +6,7 @@ export class RedisCacheService {
 	constructor(@Inject(CACHE_MANAGER) private readonly cache: Cache) {}
 
 	async get<T>(id: number): Promise<T> {
-		return this.cache.get(id.toString());
+		return this.cache.get<T>(id.toString());
 	}
 
 	async set<T>(id: number, entity: T): Promise<void> {

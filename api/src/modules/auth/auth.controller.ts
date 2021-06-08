@@ -57,7 +57,7 @@ export class AuthController extends BaseController {
 			'Invalid password',
 		);
 
-		const token = this.jwtService.sign({
+		const token = await this.jwtService.signAsync({
 			userId: existUser.id,
 		} as IJwtPayload);
 

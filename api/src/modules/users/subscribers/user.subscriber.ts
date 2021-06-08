@@ -35,14 +35,14 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
 	}
 
 	async afterInsert({ entity }: InsertEvent<User>): Promise<void> {
-		this.redisCacheService.set(entity.id, entity);
+		await this.redisCacheService.set(entity.id, entity);
 	}
 
 	async afterUpdate({ entity }: UpdateEvent<User>): Promise<void> {
-		this.redisCacheService.set(entity.id, entity);
+		await this.redisCacheService.set(entity.id, entity);
 	}
 
 	async afterRemove({ entityId }: RemoveEvent<User>): Promise<void> {
-		this.redisCacheService.del(entityId);
+		await this.redisCacheService.del(entityId);
 	}
 }

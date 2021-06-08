@@ -29,7 +29,7 @@ export class AuthMiddleware implements NestMiddleware {
 			let payload: IJwtPayload;
 
 			try {
-				payload = this.jwtService.verify<IJwtPayload>(token);
+				payload = await this.jwtService.verifyAsync<IJwtPayload>(token);
 			} catch {
 				throw new UnauthorizedException('Invalid auth header');
 			}

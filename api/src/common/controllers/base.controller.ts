@@ -40,6 +40,6 @@ export abstract class BaseController {
 		const entity = await callback();
 		const [[key, value]] = Object.entries<T[U]>(column);
 
-		if (entity[key] === value) throw new BadRequestException(message);
+		if (entity && entity[key] !== value) throw new BadRequestException(message);
 	}
 }

@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IBaseCrudController<T> {
-	create(...args: any[]): Promise<T>;
+	create(...args: unknown[]): Promise<T>;
 
-	findAll(...args: any[]): Promise<T[]>;
+	findAll(...args: unknown[]): Promise<T[]>;
 
-	findOne(...args: any[]): Promise<T>;
+	findOne(...args: unknown[]): Promise<T>;
 
-	update(...args: any[]): Promise<T>;
+	update(...args: unknown[]): Promise<T>;
 
-	remove(...args: any[]): Promise<true>;
+	remove(...args: unknown[]): Promise<true>;
 }

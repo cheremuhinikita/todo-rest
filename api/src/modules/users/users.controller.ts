@@ -59,12 +59,12 @@ export class UsersController extends BaseController implements IBaseCrudControll
 	): Promise<User> {
 		await this.checkUniqueUpdateEntity(
 			() => this.usersService.findOneByEmail(email),
-			{ email },
+			{ id },
 			'E-mail must be unique',
 		);
 		await this.checkUniqueUpdateEntity(
 			() => this.usersService.findOneByUsername(username),
-			{ username },
+			{ id },
 			'Username must be unique',
 		);
 
