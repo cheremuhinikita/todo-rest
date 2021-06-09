@@ -8,7 +8,6 @@ import { RedisCacheService } from './redis-cache.service';
 	imports: [
 		CacheModule.registerAsync({
 			imports: [ConfigModule],
-			inject: [ConfigService],
 			useFactory: async (configService: ConfigService) => ({
 				store: redisStore,
 				host: configService.get('REDIS_HOST'),
@@ -16,6 +15,7 @@ import { RedisCacheService } from './redis-cache.service';
 				ttl: +configService.get('CACHE_TTL'),
 				max: +configService.get('MAX_ITEM_IN_CACHE'),
 			}),
+			inject: [ConfigService],
 		}),
 	],
 	providers: [RedisCacheService],
