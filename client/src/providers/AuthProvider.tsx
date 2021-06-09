@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { useAuth } from '@core/hooks';
+import { IUseAuthReturn, useAuth } from '@core/hooks';
 import { IProviderProps } from '@core/interfaces';
+import { Nullable } from '@core/types';
 
-const AuthContext = React.createContext<ReturnType<typeof useAuth> | null>(null);
+const AuthContext = React.createContext<Nullable<IUseAuthReturn>>(null);
 
 AuthContext.displayName = 'Auth';
 

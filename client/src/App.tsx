@@ -1,11 +1,21 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { useAuthContext } from '@providers';
 import { AuthStatus, PageUrls } from '@core/enums';
 import { GuestGuardedRoute } from '@routes';
 import { Layout } from '@containers';
-import { InitialPage, LoginPage, RecoveryPasswordPage, RegisterPage, HomePage } from '@pages';
+import {
+	InitialPage,
+	LoginPage,
+	RecoveryPasswordPage,
+	RegisterPage,
+	HomePage,
+	UsersPage,
+	ErrorPage,
+} from '@pages';
+import { makeParam, makeUrl } from '@core/utils';
+import { ERROR_CODE_KEY } from '@core/constants';
 
 const App: React.FC = () => {
 	const { checkToken, authStatus } = useAuthContext();
@@ -17,8 +27,7 @@ const App: React.FC = () => {
 	if (authStatus === AuthStatus.INITIAL) return <InitialPage />;
 
 	return (
-		<>
-			<Redirect to={PageUrls.home} />
+		<Switch>
 			<GuestGuardedRoute exact path={PageUrls.login} component={LoginPage} />
 			<GuestGuardedRoute exact path={PageUrls.register} component={RegisterPage} />
 			<GuestGuardedRoute
@@ -26,12 +35,19 @@ const App: React.FC = () => {
 				path={PageUrls.recoveryPassword}
 				component={RecoveryPasswordPage}
 			/>
-			<Route exact path={[PageUrls.home]}>
+			<Route exact path={[PageUrls.home, PageUrls.users]}>
 				<Layout>
 					<Route exact path={PageUrls.home} component={HomePage} />
+					<Route exact path={PageUrls.users} component={UsersPage} />
 				</Layout>
 			</Route>
-		</>
+			<Route
+				exact
+				path={makeUrl(PageUrls.error, makeParam(ERROR_CODE_KEY))}
+				component={ErrorPage}
+			/>
+			<Redirect to={PageUrls.home} />
+		</Switch>
 	);
 };
 

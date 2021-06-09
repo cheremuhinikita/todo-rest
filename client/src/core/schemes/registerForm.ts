@@ -1,4 +1,4 @@
-import { SchemaOf, object, string } from 'yup';
+import * as Yup from 'yup';
 
 export interface IRegisterForm {
 	email: string;
@@ -6,14 +6,14 @@ export interface IRegisterForm {
 	password: string;
 }
 
-export const registerFormSchema: SchemaOf<IRegisterForm> = object()
+export const registerFormSchema: Yup.SchemaOf<IRegisterForm> = Yup.object()
 	.shape({
-		email: string().required('Это обязательное поле').email('Некорректный e-mail'),
-		username: string()
+		email: Yup.string().required('Это обязательное поле').email('Некорректный e-mail'),
+		username: Yup.string()
 			.required('Это обязательное поле')
 			.min(2, 'Мин кол-во символов 2')
 			.max(32, 'Макс кол-во символов 32'),
-		password: string()
+		password: Yup.string()
 			.required('Это обязательное поле')
 			.min(6, 'Мин кол-во символов 6')
 			.max(32, 'Макс кол-во символов 32'),

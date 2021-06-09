@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-dom';
 
-import { AuthStatus } from '@core/enums';
+import { AuthStatus, PageUrls } from '@core/enums';
 import { useAuthContext } from '@providers';
 
 interface IProps extends RouteProps {
@@ -12,7 +12,11 @@ export const GuestGuardedRoute: React.FC<IProps> = ({ component: Component, ...r
 	const { authStatus } = useAuthContext();
 
 	const render = (props: RouteComponentProps): React.ReactNode =>
-		authStatus === AuthStatus.UNAUTHORIZED ? <Component {...props} /> : <Redirect to="/" />;
+		authStatus === AuthStatus.UNAUTHORIZED ? (
+			<Component {...props} />
+		) : (
+			<Redirect to={PageUrls.home} />
+		);
 
 	return <Route {...rest} render={render} />;
 };

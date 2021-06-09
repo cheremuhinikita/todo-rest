@@ -8,8 +8,7 @@ import Container from '@material-ui/core/Container';
 import { useBoolState } from '@core/hooks';
 
 import useStyles from './styled';
-import { DrawerList, Profile, Toolbar } from './components';
-import { Drawer } from './components/Drawer';
+import { DrawerList, Profile, Toolbar, Drawer } from './components';
 
 interface IProps {
 	children: NonNullable<React.ReactNode>;

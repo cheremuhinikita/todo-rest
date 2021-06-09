@@ -16,9 +16,10 @@ import {
 	IRegisterForm,
 	IResetPasswordForm,
 } from '@core/schemes';
+import { Nullable } from '@core/types';
 
-interface IUseAuthReturn {
-	profile: IUserModel | null;
+export interface IUseAuthReturn {
+	profile: Nullable<IUserModel>;
 	authStatus: AuthStatus;
 	email: string;
 	checkToken: () => Promise<void>;
@@ -31,7 +32,7 @@ interface IUseAuthReturn {
 
 export const useAuth = (): IUseAuthReturn => {
 	const history = useHistory();
-	const [profile, setProfile] = React.useState<IUserModel | null>(null);
+	const [profile, setProfile] = React.useState<Nullable<IUserModel>>(null);
 	const [authStatus, setAuthStatus] = React.useState<AuthStatus>(AuthStatus.INITIAL);
 	const [email, setEmail] = React.useState<string>('');
 

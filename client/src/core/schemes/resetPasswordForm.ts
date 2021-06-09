@@ -1,4 +1,4 @@
-import { SchemaOf, object, string, ref } from 'yup';
+import * as Yup from 'yup';
 
 export interface IResetPasswordForm {
 	email: string;
@@ -7,19 +7,19 @@ export interface IResetPasswordForm {
 	passwordConfirm: string;
 }
 
-export const resetPasswordFormSchema: SchemaOf<IResetPasswordForm> = object()
+export const resetPasswordFormSchema: Yup.SchemaOf<IResetPasswordForm> = Yup.object()
 	.shape({
-		email: string(),
-		passwordChangeCode: string()
+		email: Yup.string(),
+		passwordChangeCode: Yup.string()
 			.required('Это обязательное поле')
 			.matches(/^\d+$/, 'Код является числом')
-			.length(8, 'Некорректный код'),
-		password: string()
+			.length(8, 'Код должен состоять из 8 цифр'),
+		password: Yup.string()
 			.required('Это обязательное поле')
 			.min(6, 'Мин кол-во символов 6')
 			.max(32, 'Макс кол-во символов 32'),
-		passwordConfirm: string()
+		passwordConfirm: Yup.string()
 			.required('Это обязательное поле')
-			.oneOf([ref('password'), null], 'Пароли не совпадают'),
+			.oneOf([Yup.ref('password'), null], 'Пароли не совпадают'),
 	})
 	.defined();

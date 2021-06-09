@@ -6,5 +6,9 @@ export enum PageUrls {
 
 	/* Public routes */
 	home = '/',
-	users = 'users',
+	users = '/users',
+	error = '/error',
+
+	/* Guarded routes */
+	todo = '/todo',
 }

@@ -1,6 +1,7 @@
+import { Nullable } from '@core/types';
 import React from 'react';
 
-type AnchorEl = HTMLElement | null;
+type AnchorEl = Nullable<HTMLElement>;
 
 interface IUseMenuStateReturn {
 	anchorEl: AnchorEl;

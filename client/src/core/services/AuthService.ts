@@ -1,6 +1,5 @@
 import api from '@core/api';
 import { ILoginResponse } from '@core/interfaces';
-
 import { IUserModel } from '@core/models';
 import { ILoginForm, IRegisterForm, IResetPasswordForm } from '@core/schemes';
 import { IRecoveryPasswordForm } from '@core/schemes/recoveryPasswordForm';

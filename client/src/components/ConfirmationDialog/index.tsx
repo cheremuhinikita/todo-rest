@@ -5,9 +5,11 @@ import Dialog, { DialogProps } from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import { Nullable } from '@core/types';
+
 interface IProps extends Omit<DialogProps, 'open' | 'title'> {
 	isOpen: boolean;
-	title: string | null;
+	title: Nullable<string>;
 	onDisagre: () => void;
 	onAgree: () => void;
 }

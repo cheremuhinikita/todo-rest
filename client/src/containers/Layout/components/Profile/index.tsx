@@ -1,8 +1,14 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { IconButton, Menu, Typography, Divider, MenuItem, Button } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import { useAuthContext } from '@providers';
 

@@ -1,12 +1,17 @@
 import * as Yup from 'yup';
 
-export interface ILoginForm {
+import { Role } from '@core/enums';
+
+export interface ICreateOrUpdateUserForm {
+	email: string;
 	username: string;
 	password: string;
+	role: Role;
 }
 
-export const loginFormSchema: Yup.SchemaOf<ILoginForm> = Yup.object()
+export const createOrUpdateUserFormSchema: Yup.SchemaOf<ICreateOrUpdateUserForm> = Yup.object()
 	.shape({
+		email: Yup.string().required('Это обязательное поле').email('Некорректный e-mail'),
 		username: Yup.string()
 			.required('Это обязательное поле')
 			.min(2, 'Мин кол-во символов 2')
@@ -15,5 +20,6 @@ export const loginFormSchema: Yup.SchemaOf<ILoginForm> = Yup.object()
 			.required('Это обязательное поле')
 			.min(6, 'Мин кол-во символов 6')
 			.max(32, 'Макс кол-во символов 32'),
+		role: Yup.mixed().oneOf(Object.values(Role)),
 	})
 	.defined();

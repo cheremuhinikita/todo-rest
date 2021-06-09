@@ -8,8 +8,7 @@ import {
 import { SchemaOf } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { IResponseValidationError } from '@core/interfaces';
-import { MESSAGE_ERROR_VALIDATION_ERROR } from '@core/constants';
+import { handleValidationError } from '@core/utils';
 
 type Handler<T> = (data: T) => void;
 
@@ -43,13 +42,7 @@ export const useForm = <T extends FieldValues = FieldValues, U = Record<string, 
 				const result = await source(data);
 				if (handler) handler(result);
 			} catch (err) {
-				if (err.response?.data.message === MESSAGE_ERROR_VALIDATION_ERROR) {
-					(err.response?.data.errors as IResponseValidationError[]).forEach(
-						({ property, error }) => {
-							setError(property, { message: error });
-						},
-					);
-				}
+				handleValidationError(err, setError);
 			}
 		};
 	};

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-dom';
 
-import { AuthStatus, Role } from '@core/enums';
+import { PageUrls, Role } from '@core/enums';
 import { useAuthContext } from '@providers';
+import { checkRole } from '@core/utils/role';
 
 interface IProps extends RouteProps {
 	component: React.FC<RouteComponentProps>;
@@ -13,10 +14,10 @@ export const RolesGuardedRoute: React.FC<IProps> = ({ component: Component, role
 	const { authStatus, profile } = useAuthContext();
 
 	const render = (props: RouteComponentProps): React.ReactNode =>
-		authStatus === AuthStatus.AUTHORIZED && profile && roles.includes(profile.role) ? (
+		checkRole(authStatus, profile, roles) ? (
 			<Component {...props} />
 		) : (
-			<Redirect to="/" />
+			<Redirect to={PageUrls.home} />
 		);
 
 	return <Route {...rest} render={render} />;

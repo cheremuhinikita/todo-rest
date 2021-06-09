@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
 
 import { ConfirmationDialog } from '@components';
+
 import { noopFn } from '@core/utils';
+import { Nullable } from '@core/types';
 
 import { useBoolState } from './useBoolState';
 
@@ -19,7 +21,7 @@ interface IUseConfirmDialogReturn {
 
 export const useConfirmDialog = (): IUseConfirmDialogReturn => {
 	const { isOpen, handleBoolClose, handleBoolOpen } = useBoolState();
-	const [title, setTitle] = React.useState<string | null>(null);
+	const [title, setTitle] = React.useState<Nullable<string>>(null);
 	const [dialogActions, setDialogActions] = React.useState<IDialogActions>({
 		onAgree: noopFn,
 	});

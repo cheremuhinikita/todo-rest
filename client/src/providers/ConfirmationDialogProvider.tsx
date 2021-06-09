@@ -2,8 +2,9 @@ import React from 'react';
 
 import { ConfirmDialog, useConfirmDialog } from '@core/hooks';
 import { IProviderProps } from '@core/interfaces';
+import { Nullable } from '@core/types';
 
-const ConfirmDialogContext = React.createContext<ConfirmDialog | null>(null);
+const ConfirmDialogContext = React.createContext<Nullable<ConfirmDialog>>(null);
 
 ConfirmDialogContext.displayName = 'ConfirmDialog';
 
