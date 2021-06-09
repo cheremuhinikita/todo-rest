@@ -1,6 +1,5 @@
 import api from '@core/api';
-import { IUserModel } from '@core/models';
-import { IBaseModel } from '@core/models/IBaseModel';
+import { IBaseModel } from '@core/models';
 
 export abstract class BaseCrudService<T extends IBaseModel, U> {
 	constructor(private readonly route: string) {
@@ -22,8 +21,8 @@ export abstract class BaseCrudService<T extends IBaseModel, U> {
 		return data;
 	}
 
-	public async update(id: string, body: U): Promise<IUserModel> {
-		const { data } = await api.put<IUserModel>(`${this.route}/${id}`, body);
+	public async update(id: string, body: U): Promise<true> {
+		const { data } = await api.put<true>(`${this.route}/${id}`, body);
 		return data;
 	}
 

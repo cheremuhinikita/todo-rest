@@ -4,9 +4,12 @@ import { IProviderProps } from '@core/interfaces';
 
 import { AuthProvider } from './AuthProvider';
 import { ConfirmDialogProvider } from './ConfirmationDialogProvider';
+import { CrudProvider } from './CrudProvider';
 
 export const RootProvider: React.FC<IProviderProps> = ({ children }) => (
 	<AuthProvider>
-		<ConfirmDialogProvider>{children}</ConfirmDialogProvider>
+		<ConfirmDialogProvider>
+			<CrudProvider>{children}</CrudProvider>
+		</ConfirmDialogProvider>
 	</AuthProvider>
 );

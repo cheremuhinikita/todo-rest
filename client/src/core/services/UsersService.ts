@@ -8,3 +8,5 @@ export class UsersService extends BaseCrudService<IUserModel, ICreateOrUpdateUse
 		super('users');
 	}
 }
+
+export const usersService = new UsersService();

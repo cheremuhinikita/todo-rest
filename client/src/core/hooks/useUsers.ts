@@ -1,12 +1,10 @@
 import { IUserModel } from '@core/models';
 import { ICreateOrUpdateUserForm } from '@core/schemes';
+import { UsersService, usersService } from '@core/services';
 
-import { Async } from './useAsync';
+import { IUseCrudReturn, useCrud } from './useCrud';
 
-export interface IUseUsersReturn {
-	create: (data: ICreateOrUpdateUserForm) => Promise<void>;
-	findAll: () => Async<IUserModel[]>;
-	findOne: (id: string) => Async<IUserModel>;
-	update: (id: string, data: ICreateOrUpdateUserForm) => Promise<void>;
-	delete: (id: string) => Promise<void>;
-}
+export const useUsers = (): IUseCrudReturn<IUserModel, ICreateOrUpdateUserForm> =>
+	useCrud<IUserModel, ICreateOrUpdateUserForm, UsersService>({
+		service: usersService,
+	});

@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 import { Role } from '@core/enums';
 
-export interface ICreateOrUpdateUserForm {
+export interface ICreateOrUpdateUserForm extends Record<string, unknown> {
 	email: string;
 	username: string;
 	password: string;
