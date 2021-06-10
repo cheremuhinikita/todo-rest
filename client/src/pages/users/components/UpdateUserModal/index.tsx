@@ -1,12 +1,14 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Async, UserForm } from '@components';
+import { Async } from '@components';
 import { ID_KEY, USERS_KEY } from '@core/constants';
 import { selectCrudHook } from '@core/utils/crud';
 import { DialogTitle, DialogContent } from '@material-ui/core';
 import { useCrudContext } from '@providers';
 import { ICreateOrUpdateUserForm } from '@core/schemes';
+
+import { UserForm } from '..';
 
 interface IParams {
 	[ID_KEY]: string;
@@ -21,10 +23,6 @@ export const UpdateUserModal: React.FC = () => {
 	const { id } = useParams<IParams>();
 	const source = (formValues: ICreateOrUpdateUserForm) => update(Number(id), formValues);
 
-	React.useEffect(() => {
-		execute(Number(id));
-	}, []);
-
 	const transformDefaultValues = (result: typeof data): Partial<ICreateOrUpdateUserForm> => ({
 		email: result?.email,
 		username: result?.username,
@@ -36,7 +34,12 @@ export const UpdateUserModal: React.FC = () => {
 		<>
 			<DialogTitle id="form-dialog-title">Изменение пользователя</DialogTitle>
 			<DialogContent dividers>
-				<Async data={data} loading={loading} error={error}>
+				<Async
+					execute={() => execute(Number(id))}
+					data={data}
+					loading={loading}
+					error={error}
+				>
 					{data && !loading && (
 						<UserForm
 							source={source}

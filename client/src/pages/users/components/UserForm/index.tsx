@@ -78,7 +78,7 @@ export const UserForm: React.FC<IProps> = ({ source, defaultValues, buttonText }
 					variant="outlined"
 					className={classes.formControl}
 				>
-					<InputLabel id="demo-simple-select-outlined-label">Age</InputLabel>
+					<InputLabel id="demo-simple-select-outlined-label">Роль</InputLabel>
 					<Select
 						{...register('role')}
 						labelId="demo-simple-select-outlined-label"
@@ -92,16 +92,14 @@ export const UserForm: React.FC<IProps> = ({ source, defaultValues, buttonText }
 						<FormHelperText>{errors.role?.message}</FormHelperText>
 					)}
 				</FormControl>
-				<Grid justify="flex-end">
-					<ButtonSubmit
-						variant="contained"
-						color="primary"
-						isLoading={isSubmitting}
-						className={classes.submit}
-					>
-						{buttonText}
-					</ButtonSubmit>
-				</Grid>
+				<ButtonSubmit
+					variant="contained"
+					color="primary"
+					isLoading={isSubmitting}
+					className={classes.submit}
+				>
+					{buttonText}
+				</ButtonSubmit>
 			</Grid>
 		</form>
 	);

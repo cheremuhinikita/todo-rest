@@ -7,11 +7,7 @@ import { IAsync } from '@core/interfaces';
 import { noopFn } from '@core/utils';
 
 import { useConfirmDialogContext } from '@providers';
-import {
-	MESSAGE_QUESTION_CREATE,
-	MESSAGE_QUESTION_REMOVE,
-	MESSAGE_QUESTION_UPDATE,
-} from '@core/constants';
+import { MESSAGE_QUESTION_REMOVE, MESSAGE_QUESTION_UPDATE } from '@core/constants';
 import { useAsync } from './useAsync';
 
 interface IUserCrudProps<
@@ -48,15 +44,9 @@ export const useCrud = <
 
 	const create = React.useCallback(async (data: U) => {
 		try {
-			const onAgree = async () => {
-				const response = await service.create(data);
-				await executeFindAll();
-				await onCreate(response);
-			};
-
-			confirmDialog(MESSAGE_QUESTION_CREATE, {
-				onAgree,
-			});
+			const response = await service.create(data);
+			await executeFindAll();
+			await onCreate(response);
 		} catch (err) {
 			throw err;
 		}

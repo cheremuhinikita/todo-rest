@@ -3,8 +3,8 @@ import React from 'react';
 
 import { IProviderProps, ICrudContext } from '@core/interfaces';
 import { Nullable } from '@core/types';
-import { useUsers } from '@core/hooks';
-import { USERS_KEY } from '@core/constants';
+import { useTodo, useUsers } from '@core/hooks';
+import { TODO_KEY, USERS_KEY } from '@core/constants';
 
 const CrudContext = React.createContext<Nullable<ICrudContext>>(null);
 
@@ -19,9 +19,11 @@ export const useCrudContext = function <T>(callback: (context: ICrudContext) => 
 
 export const CrudProvider: React.FC<IProviderProps> = ({ children }) => {
 	const users = useUsers();
+	const todo = useTodo();
 
 	const value = {
 		[USERS_KEY]: users,
+		[TODO_KEY]: todo,
 	};
 
 	return <CrudContext.Provider value={value}>{children}</CrudContext.Provider>;

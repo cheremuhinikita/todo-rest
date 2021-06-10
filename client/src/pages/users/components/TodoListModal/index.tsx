@@ -21,20 +21,11 @@ export const TodoListModal: React.FC = () => {
 
 	const { id } = useParams<IParams>();
 
-	React.useEffect(() => {
-		execute(Number(id));
-	}, []);
-
 	return (
-		<Async data={data} loading={loading} error={error}>
+		<Async execute={() => execute(Number(id))} data={data} loading={loading} error={error}>
 			<DialogTitle id="form-dialog-title">ToDo</DialogTitle>
 			<DialogContent dividers>
-				<List>
-					{data &&
-						data.map(({ id: todoId, ...todoItem }) => (
-							<Todo key={todoId} {...todoItem} />
-						))}
-				</List>
+				<List>{data && data.map((todo) => <Todo key={todo.id} model={todo} />)}</List>
 			</DialogContent>
 		</Async>
 	);

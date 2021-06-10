@@ -2,8 +2,8 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { useAuthContext } from '@providers';
-import { AuthStatus, PageUrls } from '@core/enums';
-import { GuestGuardedRoute } from '@routes';
+import { AuthStatus, PageUrls, Role } from '@core/enums';
+import { GuestGuardedRoute, RolesGuardedRoute } from '@routes';
 import { Layout } from '@containers';
 import {
 	InitialPage,
@@ -13,6 +13,7 @@ import {
 	HomePage,
 	UsersPage,
 	ErrorPage,
+	TodoPage,
 } from '@pages';
 import { makeParam, makeUrl } from '@core/utils';
 import { ERROR_CODE_KEY } from '@core/constants';
@@ -44,6 +45,11 @@ const App: React.FC = () => {
 				<Layout>
 					<Route exact path={PageUrls.home} component={HomePage} />
 					<Route path={PageUrls.users} component={UsersPage} />
+					<RolesGuardedRoute
+						roles={[Role.USER]}
+						path={PageUrls.todo}
+						component={TodoPage}
+					/>
 				</Layout>
 			</Route>
 			<Redirect to={PageUrls.home} />
