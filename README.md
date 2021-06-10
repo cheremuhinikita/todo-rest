@@ -26,6 +26,16 @@ $ npm run start:cache
 $ npm run start
 ```
 
+## Running the client using Node.js
+
+```
+# installation
+$ npm install
+
+# start client
+$ npm run start
+```
+
 ## Running the app using Docker Compose
 
 ```

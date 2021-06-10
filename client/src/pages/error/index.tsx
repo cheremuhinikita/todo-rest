@@ -21,7 +21,7 @@ export const ErrorPage: React.FC<RouteComponentProps<IParams>> = ({ match: { par
 	const { title, desciprtion } = ERRORS[code];
 
 	return (
-		<div className={classes.wrapper}>
+		<div className={classes.root}>
 			<Typography component="h1" variant="h2" className={classes.title}>
 				{`${code}: ${title}`}
 			</Typography>

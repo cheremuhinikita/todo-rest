@@ -27,9 +27,9 @@ axiosInstance.interceptors.response.use(undefined, ({ response }: AxiosError<IEr
 		relocationOnError(response, ErrorCodesNumbers.InternalServerError);
 		relocationOnError(response, ErrorCodesNumbers.NotFound);
 		relocationOnError(response, ErrorCodesNumbers.Forbidden);
-
-		if (response?.data?.message) notifyServerError(response?.data?.message);
 	}
+
+	if (response?.data?.message) notifyServerError(response?.data?.message);
 
 	return Promise.reject(response);
 });

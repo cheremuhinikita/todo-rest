@@ -49,6 +49,7 @@ export const useAuth = (): IUseAuthReturn => {
 			}
 		} catch {
 			setAuthStatus(AuthStatus.UNAUTHORIZED);
+			window.localStorage.removeItem(TOKEN_KEY);
 		}
 	}, []);
 

@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export interface IRecoveryPasswordForm {
+export interface IRecoveryPasswordForm extends Record<string, string> {
 	email: string;
 }
 

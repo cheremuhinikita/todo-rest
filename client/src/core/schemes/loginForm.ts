@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export interface ILoginForm {
+export interface ILoginForm extends Record<string, string> {
 	username: string;
 	password: string;
 }

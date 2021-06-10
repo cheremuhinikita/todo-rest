@@ -19,3 +19,7 @@ export const SERVER_ERRORS_MESSAGES = {
 
 export const MESSAGE_SUCCESS_REGISTER = 'Вы успешно зарегистировались';
 export const MESSAGE_SUCCESS_RECOVERY_PASSWORD = 'Вы успешно сбросили пароль';
+
+export const MESSAGE_QUESTION_CREATE = 'Вы действильно хотите создать?';
+export const MESSAGE_QUESTION_UPDATE = 'Вы действильно хотите обновить?';
+export const MESSAGE_QUESTION_REMOVE = 'Вы действильно хотите удалить?';

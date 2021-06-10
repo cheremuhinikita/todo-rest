@@ -35,17 +35,17 @@ const App: React.FC = () => {
 				path={PageUrls.recoveryPassword}
 				component={RecoveryPasswordPage}
 			/>
-			<Route exact path={[PageUrls.home, PageUrls.users]}>
-				<Layout>
-					<Route exact path={PageUrls.home} component={HomePage} />
-					<Route exact path={PageUrls.users} component={UsersPage} />
-				</Layout>
-			</Route>
 			<Route
 				exact
 				path={makeUrl(PageUrls.error, makeParam(ERROR_CODE_KEY))}
 				component={ErrorPage}
 			/>
+			<Route path={[PageUrls.home, PageUrls.users]}>
+				<Layout>
+					<Route exact path={PageUrls.home} component={HomePage} />
+					<Route path={PageUrls.users} component={UsersPage} />
+				</Layout>
+			</Route>
 			<Redirect to={PageUrls.home} />
 		</Switch>
 	);

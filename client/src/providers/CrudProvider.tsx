@@ -1,13 +1,10 @@
 /* eslint-disable func-names */
 import React from 'react';
 
-import { IProviderProps } from '@core/interfaces';
+import { IProviderProps, ICrudContext } from '@core/interfaces';
 import { Nullable } from '@core/types';
 import { useUsers } from '@core/hooks';
-
-interface ICrudContext {
-	users: typeof useUsers;
-}
+import { USERS_KEY } from '@core/constants';
 
 const CrudContext = React.createContext<Nullable<ICrudContext>>(null);
 
@@ -21,8 +18,10 @@ export const useCrudContext = function <T>(callback: (context: ICrudContext) => 
 };
 
 export const CrudProvider: React.FC<IProviderProps> = ({ children }) => {
+	const users = useUsers();
+
 	const value = {
-		users: useUsers,
+		[USERS_KEY]: users,
 	};
 
 	return <CrudContext.Provider value={value}>{children}</CrudContext.Provider>;

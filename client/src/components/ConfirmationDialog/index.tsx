@@ -32,10 +32,10 @@ export const ConfirmationDialog: React.FC<IProps> = ({
 		<DialogTitle id="alert-dialog-title">{title}</DialogTitle>
 		<DialogActions>
 			<Button onClick={onDisagre} color="primary">
-				Disagree
+				Отмена
 			</Button>
 			<Button onClick={onAgree} color="primary" autoFocus>
-				Agree
+				Да
 			</Button>
 		</DialogActions>
 	</Dialog>

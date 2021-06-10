@@ -9,6 +9,7 @@ import { ParamsDto } from '@common/dto/params.dto';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateOrUpdateUserDto } from './dto/create-or-update-user.dto';
+import { Todo } from '@modules/todo/entities/todo.entity';
 
 @Controller('users')
 export class UsersController extends BaseController implements IBaseCrudController<User> {
@@ -40,6 +41,16 @@ export class UsersController extends BaseController implements IBaseCrudControll
 	@Get()
 	async findAll(): Promise<User[]> {
 		return this.usersService.findAll();
+	}
+
+	@Get(':id/todo')
+	async findTodo(@Param() { id }: ParamsDto): Promise<Todo[]> {
+		const { todo } = await this.checkEntity(
+			() => this.usersService.findOneById(id, true),
+			`User by id #${id} does not exists`,
+		);
+
+		return todo;
 	}
 
 	@Auth(Role.ADMIN)

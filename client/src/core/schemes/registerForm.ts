@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export interface IRegisterForm {
+export interface IRegisterForm extends Record<string, string> {
 	email: string;
 	username: string;
 	password: string;

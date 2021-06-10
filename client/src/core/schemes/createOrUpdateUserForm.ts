@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 import { Role } from '@core/enums';
 
-export interface ICreateOrUpdateUserForm extends Record<string, unknown> {
+export interface ICreateOrUpdateUserForm extends Record<string, string> {
 	email: string;
 	username: string;
 	password: string;
@@ -20,6 +20,6 @@ export const createOrUpdateUserFormSchema: Yup.SchemaOf<ICreateOrUpdateUserForm>
 			.required('Это обязательное поле')
 			.min(6, 'Мин кол-во символов 6')
 			.max(32, 'Макс кол-во символов 32'),
-		role: Yup.mixed().oneOf(Object.values(Role)),
+		role: Yup.mixed().required('Это обязательное поле').oneOf(Object.values(Role)),
 	})
 	.defined();

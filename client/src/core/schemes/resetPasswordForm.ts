@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export interface IResetPasswordForm {
+export interface IResetPasswordForm extends Record<string, string> {
 	email: string;
 	passwordChangeCode: string;
 	password: string;

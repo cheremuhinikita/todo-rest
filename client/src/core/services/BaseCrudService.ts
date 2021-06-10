@@ -16,17 +16,17 @@ export abstract class BaseCrudService<T extends IBaseModel, U> {
 		return data;
 	}
 
-	public async findOne(id: string): Promise<T> {
+	public async findOne(id: number): Promise<T> {
 		const { data } = await api.get<T>(`${this.route}/${id}`);
 		return data;
 	}
 
-	public async update(id: string, body: U): Promise<true> {
+	public async update(id: number, body: U): Promise<true> {
 		const { data } = await api.put<true>(`${this.route}/${id}`, body);
 		return data;
 	}
 
-	public async delete(id: string): Promise<true> {
+	public async delete(id: number): Promise<true> {
 		const { data } = await api.delete<true>(`${this.route}/${id}`);
 		return data;
 	}
