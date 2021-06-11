@@ -46,7 +46,7 @@ export const DrawerList: React.FC = () => {
 						<TodoIcon />
 					</ListItemIcon>
 					<ListItemText
-						primary="ToDO"
+						primary="Мои ToDO"
 						color="secondary"
 						className={classes.listItemText}
 					/>

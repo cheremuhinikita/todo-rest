@@ -18,7 +18,7 @@ export default makeStyles((theme) => ({
 	submit: {
 		margin: theme.spacing(3, 0, 2),
 	},
-	formControl: {
+	select: {
 		margin: theme.spacing(1, 0),
 	},
 }));

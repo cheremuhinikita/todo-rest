@@ -1,5 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 
 export default makeStyles({
-	root: {},
+	full: {
+		padding: 0,
+	},
 });

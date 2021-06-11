@@ -3,3 +3,4 @@ export * from './router';
 export * from './role';
 export * from './validation';
 export * from './crud';
+export * from './date';

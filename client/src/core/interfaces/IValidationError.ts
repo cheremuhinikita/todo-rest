@@ -1,5 +1,6 @@
-export interface IValidationError {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	property: any;
+import { Path } from 'react-hook-form';
+
+export interface IValidationError<T> {
+	property: Path<T>;
 	error: string;
 }

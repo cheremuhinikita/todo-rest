@@ -22,11 +22,22 @@ export const TodoListModal: React.FC = () => {
 	const { id } = useParams<IParams>();
 
 	return (
-		<Async execute={() => execute(Number(id))} data={data} loading={loading} error={error}>
+		<>
 			<DialogTitle id="form-dialog-title">ToDo</DialogTitle>
 			<DialogContent dividers>
-				<List>{data && data.map((todo) => <Todo key={todo.id} model={todo} />)}</List>
+				<Async
+					strictMode
+					execute={() => execute(Number(id))}
+					data={data}
+					loading={loading}
+					error={error}
+				>
+					<List>
+						{data &&
+							data.map((todo) => <Todo key={todo.id} full={false} model={todo} />)}
+					</List>
+				</Async>
 			</DialogContent>
-		</Async>
+		</>
 	);
 };

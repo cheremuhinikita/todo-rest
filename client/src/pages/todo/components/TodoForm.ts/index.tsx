@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Grid, TextField } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 
-import { ButtonSubmit, Form } from '@components';
+import { ButtonSubmit, Form, TextField } from '@components';
 import { useForm } from '@core/hooks';
 import { createOrUpdateTodoFormSchema, ICreateOrUpdateTodoForm } from '@core/schemes';
 import { IBaseFormProps } from '@core/interfaces';
@@ -11,14 +11,18 @@ import useStyles from './styled';
 
 type Props = IBaseFormProps<ICreateOrUpdateTodoForm>;
 
-export const TodoForm: React.FC<Props> = ({ source, defaultValues, buttonText }) => {
+export const TodoForm: React.FC<Props> = ({
+	source,
+	buttonText,
+	confirmQuestion,
+	defaultValues,
+}) => {
 	const classes = useStyles();
 
 	const {
-		register,
+		control,
 		handleSubmit,
-		watch,
-		formState: { errors, isSubmitting },
+		formState: { isDisabled, isSubmitting },
 	} = useForm<ICreateOrUpdateTodoForm, void>({
 		source,
 		schema: createOrUpdateTodoFormSchema,
@@ -26,33 +30,33 @@ export const TodoForm: React.FC<Props> = ({ source, defaultValues, buttonText })
 	});
 
 	return (
-		<Form onSubmit={handleSubmit()} className={classes.form}>
+		<Form
+			confirmSubmit
+			isDisabled={isDisabled}
+			confirmQuestion={confirmQuestion}
+			onSubmit={handleSubmit()}
+			className={classes.form}
+		>
 			<Grid container spacing={2} justify="flex-end">
 				<TextField
-					{...register('title')}
 					autoFocus
 					fullWidth
 					id="title"
 					label="Название"
-					variant="outlined"
-					value={watch().title}
-					error={!!errors.title}
-					helperText={errors.title?.message}
+					name="title"
+					control={control}
 				/>
 				<TextField
-					{...register('description')}
 					fullWidth
 					id="username"
 					label="Описание"
-					margin="normal"
-					variant="outlined"
-					value={watch().description}
-					error={!!errors.description}
-					helperText={errors.description?.message}
+					name="description"
+					control={control}
 				/>
 				<ButtonSubmit
 					variant="contained"
 					color="primary"
+					disabled={isDisabled}
 					isLoading={isSubmitting}
 					className={classes.submit}
 				>

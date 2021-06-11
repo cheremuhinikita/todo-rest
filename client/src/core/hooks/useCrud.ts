@@ -6,8 +6,6 @@ import { IBaseModel } from '@core/models/IBaseModel';
 import { IAsync } from '@core/interfaces';
 import { noopFn } from '@core/utils';
 
-import { useConfirmDialogContext } from '@providers';
-import { MESSAGE_QUESTION_REMOVE, MESSAGE_QUESTION_UPDATE } from '@core/constants';
 import { useAsync } from './useAsync';
 
 interface IUserCrudProps<
@@ -39,7 +37,6 @@ export const useCrud = <
 	onUpdate = noopFn,
 	onRemove = noopFn,
 }: IUserCrudProps<T, U, C>): IUseCrudReturn<T, U> => {
-	const confirmDialog = useConfirmDialogContext();
 	const { execute: executeFindAll, ...restFindAll } = useAsync(() => service.findAll());
 
 	const create = React.useCallback(async (data: U) => {
@@ -61,15 +58,9 @@ export const useCrud = <
 
 	const update = React.useCallback(async (id: number, data: U) => {
 		try {
-			const onAgree = async () => {
-				const response = await service.update(id, data);
-				await executeFindAll();
-				await onUpdate(response);
-			};
-
-			confirmDialog(MESSAGE_QUESTION_UPDATE, {
-				onAgree,
-			});
+			const response = await service.update(id, data);
+			await executeFindAll();
+			await onUpdate(response);
 		} catch (err) {
 			throw err;
 		}
@@ -77,15 +68,9 @@ export const useCrud = <
 
 	const remove = React.useCallback(async (id: number) => {
 		try {
-			const onAgree = async () => {
-				const response = await service.delete(id);
-				await executeFindAll();
-				await onRemove(response);
-			};
-
-			confirmDialog(MESSAGE_QUESTION_REMOVE, {
-				onAgree,
-			});
+			const response = await service.delete(id);
+			await executeFindAll();
+			await onRemove(response);
 		} catch (err) {
 			throw err;
 		}

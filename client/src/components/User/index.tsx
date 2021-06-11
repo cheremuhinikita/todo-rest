@@ -4,25 +4,25 @@ import { IUserModel } from '@core/models';
 
 import Typography from '@material-ui/core/Typography';
 
+import { Block } from '@components';
 import { RolesGuard } from '@core/guards';
 import { Role } from '@core/enums';
-import { Block } from '@components';
+import { IBaseCardProps } from '@core/interfaces';
 
+import { formatDate } from '@core/utils';
 import useStyles from './styled';
 
-interface IProps extends Omit<IUserModel, 'id' | 'todo'> {
-	component?: React.FC;
-}
+type Props = IBaseCardProps<IUserModel>;
 
-export const User: React.FC<IProps> = ({
-	username,
-	email,
-	role,
-	createDate,
-	updateDate,
+export const User: React.FC<Props> = ({
+	model: { username, email, role, createDate, updateDate },
 	component: Component = Block,
 }) => {
 	const classes = useStyles();
+
+	const formatStr = 'd MMMM Y г.';
+	const formattedCreateDate = formatDate(createDate, formatStr);
+	const formattedUpdateDate = formatDate(updateDate, formatStr);
 
 	return (
 		<Component>
@@ -37,10 +37,10 @@ export const User: React.FC<IProps> = ({
 					{`Роль: ${role}`}
 				</Typography>
 				<Typography className={classes.title} color="textSecondary" gutterBottom>
-					{`Дата создания: ${createDate}`}
+					{`Дата создания: ${formattedCreateDate}`}
 				</Typography>
 				<Typography className={classes.title} color="textSecondary" gutterBottom>
-					{`Дата обновления: ${updateDate}`}
+					{`Дата обновления: ${formattedUpdateDate}`}
 				</Typography>
 			</RolesGuard>
 		</Component>

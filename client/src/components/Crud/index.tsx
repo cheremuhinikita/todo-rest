@@ -6,32 +6,44 @@ import Button from '@material-ui/core/Button';
 
 import { useCrudContext } from '@providers';
 import { Async, Modal } from '@components';
-import { makeUrl, selectCrudHook } from '@core/utils';
-import { IBaseCardProps, IBaseFormProps, ICrudContext } from '@core/interfaces';
+import { makeParam, makeUrl, selectCrudHook } from '@core/utils';
+import {
+	IBaseAddActionsProps,
+	IBaseCardProps,
+	IBaseFormProps,
+	ICrudContext,
+} from '@core/interfaces';
 import { IBaseModel } from '@core/models';
 import { Actions } from '@core/types/crud';
 import { RolesGuard } from '@core/guards';
 import { ModalUrls, PageUrls } from '@core/enums';
+import { ID_KEY } from '@core/constants';
 
+import { BaseCard, BaseCreateModal, BaseUpdateModal } from './components';
 import useStyles from './styled';
-import { BaseCard, BaseCreateModal } from './components';
 
 interface IProps<T extends IBaseModel, U extends Record<string, string>> {
+	children?: React.ReactNode;
 	title: string;
 	hookKey: keyof ICrudContext;
-	card: React.FC<IBaseCardProps<T>>;
-	form: React.FC<IBaseFormProps<U>>;
 	actions: Actions;
 	pageUrl: PageUrls;
+	transformValues: (result: T) => Partial<U>;
+	card: React.FC<IBaseCardProps<T>>;
+	form: React.FC<IBaseFormProps<U>>;
+	addActions?: React.FC<IBaseAddActionsProps<T>>;
 }
 
 export function Crud<T extends IBaseModel, U extends Record<string, string>>({
+	children,
 	title,
 	hookKey,
-	card: Card,
-	form: Form,
 	actions,
 	pageUrl,
+	transformValues,
+	card: Card,
+	form: Form,
+	addActions: AddActions,
 }: IProps<T, U>): React.ReactElement {
 	const classes = useStyles();
 	const {
@@ -39,7 +51,8 @@ export function Crud<T extends IBaseModel, U extends Record<string, string>>({
 		remove,
 	} = useCrudContext(selectCrudHook(hookKey));
 
-	const pathCreate = makeUrl(pageUrl, ModalUrls.create);
+	const createPath = makeUrl(pageUrl, ModalUrls.create);
+	const updatePath = makeUrl(pageUrl, makeParam(ID_KEY), ModalUrls.update);
 
 	return (
 		<div className={classes.root}>
@@ -48,7 +61,7 @@ export function Crud<T extends IBaseModel, U extends Record<string, string>>({
 					{title}
 				</Typography>
 				<RolesGuard roles={actions.create}>
-					<Button size="small" variant="contained" component={RouterLink} to={pathCreate}>
+					<Button size="small" variant="contained" component={RouterLink} to={createPath}>
 						Создать
 					</Button>
 				</RolesGuard>
@@ -61,18 +74,19 @@ export function Crud<T extends IBaseModel, U extends Record<string, string>>({
 								key={model.id}
 								id={model.id}
 								model={model}
+								actions={actions}
 								component={Card}
+								addActions={AddActions}
 								onRemove={remove}
-								updateRoles={actions.update}
-								removeRoles={actions.delete}
 							/>
 						))}
 				</Async>
 			</RolesGuard>
 			<RolesGuard roles={actions.create}>
 				<Modal
+					confirmClose
 					scroll="paper"
-					path={pathCreate}
+					path={createPath}
 					classes={{
 						paper: classes.paper,
 					}}
@@ -80,6 +94,23 @@ export function Crud<T extends IBaseModel, U extends Record<string, string>>({
 					<BaseCreateModal hookKey={hookKey} form={Form} />
 				</Modal>
 			</RolesGuard>
+			<RolesGuard roles={actions.update}>
+				<Modal
+					confirmClose
+					scroll="paper"
+					path={updatePath}
+					classes={{
+						paper: classes.paper,
+					}}
+				>
+					<BaseUpdateModal
+						hookKey={hookKey}
+						form={Form}
+						transformValues={transformValues}
+					/>
+				</Modal>
+			</RolesGuard>
+			{children}
 		</div>
 	);
 }

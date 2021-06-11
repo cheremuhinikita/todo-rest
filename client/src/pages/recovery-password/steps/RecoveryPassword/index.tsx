@@ -1,11 +1,10 @@
 import React from 'react';
 
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 import { useForm } from '@core/hooks';
 
-import { ButtonSubmit } from '@components';
+import { ButtonSubmit, Form, TextField } from '@components';
 
 import { IRecoveryPasswordForm, recoveryPasswordFormSchema } from '@core/schemes';
 import { useAuthContext } from '@providers';
@@ -20,9 +19,9 @@ export const RecoveryPassword: React.FC<IProps> = ({ handleNext }) => {
 	const { recoveryPassword } = useAuthContext();
 
 	const {
-		register,
+		control,
 		handleSubmit,
-		formState: { errors, isSubmitting },
+		formState: { isSubmitting, isDisabled },
 	} = useForm<IRecoveryPasswordForm, true>({
 		source: recoveryPassword,
 		schema: recoveryPasswordFormSchema,
@@ -38,16 +37,18 @@ export const RecoveryPassword: React.FC<IProps> = ({ handleNext }) => {
 				Сообщите нам свой адрес электронной почты, чтобы мы могли отправить вам ссылку для
 				сброса
 			</Typography>
-			<form noValidate onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+			<Form
+				isDisabled={isDisabled}
+				onSubmit={handleSubmit(onSubmit)}
+				className={classes.form}
+			>
 				<TextField
-					{...register('email')}
 					fullWidth
 					id="email"
 					label="E-mail"
+					name="email"
 					autoComplete="email"
-					variant="outlined"
-					error={!!errors.email}
-					helperText={errors.email?.message}
+					control={control}
 				/>
 				<div className={classes.buttons}>
 					<ButtonSubmit
@@ -59,7 +60,7 @@ export const RecoveryPassword: React.FC<IProps> = ({ handleNext }) => {
 						Восстановить
 					</ButtonSubmit>
 				</div>
-			</form>
+			</Form>
 		</>
 	);
 };

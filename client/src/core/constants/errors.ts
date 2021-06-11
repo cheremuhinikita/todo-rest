@@ -1,12 +1,13 @@
 import { ErrorCodes } from '@core/enums';
 import { ExcludedErrorCodes } from '@core/types';
 
-type Errors = {
-	[P in ExcludedErrorCodes]: {
+type Errors = Record<
+	ExcludedErrorCodes,
+	{
 		title: string;
 		desciprtion: string;
-	};
-};
+	}
+>;
 
 const ERROR_DESCIPTION =
 	'Вы либо попробовали какой-то сомнительный маршрут, либо пришли сюда по ошибке. Что бы это ни было, попробуйте воспользоваться навигацией.';

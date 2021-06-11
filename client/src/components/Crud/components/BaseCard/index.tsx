@@ -7,37 +7,43 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 
+import { useConfirmDialogContext } from '@providers';
 import { RolesGuard } from '@core/guards';
-import { ModalUrls, Role } from '@core/enums';
-import { IBaseCardProps } from '@core/interfaces';
-
+import { ModalUrls } from '@core/enums';
+import { IBaseAddActionsProps, IBaseCardProps } from '@core/interfaces';
 import { makeUrlModal } from '@core/utils';
-
 import { IBaseModel } from '@core/models';
+import { Actions } from '@core/types';
+import { MESSAGE_QUESTION_DELETE } from '@core/constants';
 
 import useStyles from './styled';
 
 interface IProps<T extends IBaseModel> {
 	id: number;
 	model: T;
+	actions: Actions;
 	component: React.FC<IBaseCardProps<T>>;
-	updateRoles: Role[];
-	removeRoles: Role[];
+	addActions?: React.FC<IBaseAddActionsProps<T>>;
 	onRemove: (id: number) => Promise<void>;
 }
 
 export function BaseCard<T extends IBaseModel>({
 	id,
 	model,
+	actions,
 	component: Component,
-	updateRoles,
-	removeRoles,
+	addActions: AddActions,
 	onRemove,
 }: IProps<T>): React.ReactElement {
 	const classes = useStyles();
+	const confirmDialog = useConfirmDialogContext();
 
 	const handleRemove = (): void => {
-		onRemove(id);
+		const onAgree = () => onRemove(id);
+
+		confirmDialog(MESSAGE_QUESTION_DELETE, {
+			onAgree,
+		});
 	};
 
 	return (
@@ -45,7 +51,8 @@ export function BaseCard<T extends IBaseModel>({
 			<Component component={CardContent} model={model} />
 			<Divider />
 			<CardActions>
-				<RolesGuard roles={updateRoles}>
+				{AddActions && <AddActions model={model} />}
+				<RolesGuard roles={actions.update}>
 					<Button
 						size="small"
 						variant="contained"
@@ -55,7 +62,7 @@ export function BaseCard<T extends IBaseModel>({
 						Изменить
 					</Button>
 				</RolesGuard>
-				<RolesGuard roles={removeRoles}>
+				<RolesGuard roles={actions.delete}>
 					<Button size="small" variant="text" onClick={handleRemove}>
 						Удалить
 					</Button>

@@ -1,32 +1,30 @@
 import React from 'react';
 
-import { FormControl, Grid, InputLabel, TextField } from '@material-ui/core';
-import Select from '@material-ui/core/Select';
-import FormHelperText from '@material-ui/core/FormHelperText';
-
-import { ButtonSubmit } from '@components';
-import { useForm } from '@core/hooks';
-import { createOrUpdateUserFormSchema, ICreateOrUpdateUserForm } from '@core/schemes';
-
+import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import { ButtonSubmit, Form, Select, TextField } from '@components';
+import { useForm } from '@core/hooks';
+import { IBaseFormProps } from '@core/interfaces';
+import { createOrUpdateUserFormSchema, ICreateOrUpdateUserForm } from '@core/schemes';
 import { Role } from '@core/enums';
 
 import useStyles from './styled';
 
-interface IProps {
-	source: (data: ICreateOrUpdateUserForm) => void;
-	buttonText: string;
-	defaultValues?: Partial<ICreateOrUpdateUserForm>;
-}
+type Props = IBaseFormProps<ICreateOrUpdateUserForm>;
 
-export const UserForm: React.FC<IProps> = ({ source, defaultValues, buttonText }) => {
+export const UserForm: React.FC<Props> = ({
+	source,
+	defaultValues,
+	buttonText,
+	confirmQuestion,
+}) => {
 	const classes = useStyles();
 
 	const {
-		register,
+		control,
 		handleSubmit,
-		watch,
-		formState: { errors, isSubmitting },
+		formState: { isDisabled, isSubmitting },
 	} = useForm<ICreateOrUpdateUserForm, void>({
 		source,
 		schema: createOrUpdateUserFormSchema,
@@ -34,73 +32,57 @@ export const UserForm: React.FC<IProps> = ({ source, defaultValues, buttonText }
 	});
 
 	return (
-		<form noValidate onSubmit={handleSubmit()} className={classes.form}>
+		<Form
+			confirmSubmit
+			isDisabled={isDisabled}
+			confirmQuestion={confirmQuestion}
+			onSubmit={handleSubmit()}
+			className={classes.form}
+		>
 			<Grid container spacing={2} justify="flex-end">
 				<TextField
-					{...register('email')}
 					autoFocus
 					fullWidth
 					id="email"
 					label="E-mail"
-					autoComplete="email"
-					variant="outlined"
-					value={watch().email}
-					error={!!errors.email}
-					helperText={errors.email?.message}
+					name="email"
+					control={control}
 				/>
 				<TextField
-					{...register('username')}
 					fullWidth
 					id="username"
 					label="Имя пользователя"
-					margin="normal"
-					variant="outlined"
-					value={watch().username}
-					error={!!errors.username}
-					helperText={errors.username?.message}
+					name="username"
+					control={control}
 				/>
 				<TextField
-					{...register('password')}
 					fullWidth
 					id="password"
-					type="password"
 					label="Пароль"
-					margin="normal"
-					variant="outlined"
-					value={watch().password}
-					autoComplete="current-password"
-					error={!!errors.password}
-					helperText={errors.password?.message}
+					type="password"
+					name="password"
+					control={control}
 				/>
-				<FormControl
-					error={!!errors.role}
-					fullWidth
-					variant="outlined"
-					className={classes.formControl}
+				<Select
+					name="role"
+					label="Роль"
+					labelId="role"
+					control={control}
+					className={classes.select}
 				>
-					<InputLabel id="demo-simple-select-outlined-label">Роль</InputLabel>
-					<Select
-						{...register('role')}
-						labelId="demo-simple-select-outlined-label"
-						id="demo-simple-select-outlined"
-						value={watch().role}
-					>
-						<MenuItem value={Role.USER}>Пользователь</MenuItem>
-						<MenuItem value={Role.ADMIN}>Админ</MenuItem>
-					</Select>
-					{errors.role?.message && (
-						<FormHelperText>{errors.role?.message}</FormHelperText>
-					)}
-				</FormControl>
+					<MenuItem value={Role.USER}>Пользователь</MenuItem>
+					<MenuItem value={Role.ADMIN}>Админ</MenuItem>
+				</Select>
 				<ButtonSubmit
 					variant="contained"
 					color="primary"
+					disabled={isDisabled}
 					isLoading={isSubmitting}
 					className={classes.submit}
 				>
 					{buttonText}
 				</ButtonSubmit>
 			</Grid>
-		</form>
+		</Form>
 	);
 };

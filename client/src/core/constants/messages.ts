@@ -22,4 +22,13 @@ export const MESSAGE_SUCCESS_RECOVERY_PASSWORD = 'Вы успешно сброс
 
 export const MESSAGE_QUESTION_CREATE = 'Вы действильно хотите создать?';
 export const MESSAGE_QUESTION_UPDATE = 'Вы действильно хотите обновить?';
-export const MESSAGE_QUESTION_REMOVE = 'Вы действильно хотите удалить?';
+export const MESSAGE_QUESTION_DELETE = 'Вы действильно хотите удалить?';
+export const MESSAGE_QUESTION_EXIT = 'Вы действильно хотите закрыть?';
+
+export const MESSAGE_SUCCESS_CREATE_USER = 'Вы успешно создали нового пользователя';
+export const MESSAGE_SUCCESS_UPDATE_USER = 'Вы успешно обновили пользователя';
+export const MESSAGE_SUCCESS_DELETE_USER = 'Вы успешно удалили пользователя';
+
+export const MESSAGE_SUCCESS_CREATE_TODO = 'Вы успешно создали новую ToDo';
+export const MESSAGE_SUCCESS_UPDATE_TODO = 'Вы успешно обновили ToDo';
+export const MESSAGE_SUCCESS_DELETE_TODO = 'Вы успешно удалили ToDo';

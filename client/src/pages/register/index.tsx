@@ -2,7 +2,6 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -12,7 +11,7 @@ import { useAuthContext } from '@providers';
 import { IRegisterForm, registerFormSchema } from '@core/schemes';
 import { useForm } from '@core/hooks';
 
-import { ButtonSubmit, Link } from '@components';
+import { ButtonSubmit, Form, Link, TextField } from '@components';
 
 import { PageUrls } from '@core/enums';
 import useStyles from './styled';
@@ -22,9 +21,9 @@ export const RegisterPage: React.FC<RouteComponentProps> = () => {
 	const { register: registerAuth } = useAuthContext();
 
 	const {
-		register,
+		control,
 		handleSubmit,
-		formState: { errors, isSubmitting },
+		formState: { isSubmitting, isDisabled },
 	} = useForm<IRegisterForm, void>({
 		source: registerAuth,
 		schema: registerFormSchema,
@@ -39,46 +38,39 @@ export const RegisterPage: React.FC<RouteComponentProps> = () => {
 				<Typography component="h1" variant="h5">
 					Регистрация
 				</Typography>
-				<form noValidate onSubmit={handleSubmit()} className={classes.form}>
+				<Form isDisabled={isDisabled} onSubmit={handleSubmit()} className={classes.form}>
 					<Grid container spacing={2}>
 						<TextField
-							{...register('email')}
 							autoFocus
 							fullWidth
 							id="email"
 							label="E-mail"
 							autoComplete="email"
-							variant="outlined"
-							error={!!errors.email}
-							helperText={errors.email?.message}
+							name="email"
+							control={control}
 						/>
 						<TextField
-							{...register('username')}
 							fullWidth
 							id="username"
 							label="Имя пользователя"
-							margin="normal"
-							variant="outlined"
-							error={!!errors.username}
-							helperText={errors.username?.message}
+							name="username"
+							control={control}
 						/>
 						<TextField
-							{...register('password')}
 							fullWidth
 							id="password"
 							type="password"
 							label="Пароль"
 							margin="normal"
-							variant="outlined"
-							autoComplete="current-password"
-							error={!!errors.password}
-							helperText={errors.password?.message}
+							name="password"
+							control={control}
 						/>
 					</Grid>
 					<ButtonSubmit
 						fullWidth
 						variant="contained"
 						color="primary"
+						disabled={isDisabled}
 						isLoading={isSubmitting}
 						className={classes.submit}
 					>
@@ -91,7 +83,7 @@ export const RegisterPage: React.FC<RouteComponentProps> = () => {
 							</Link>
 						</Grid>
 					</Grid>
-				</form>
+				</Form>
 			</div>
 		</Container>
 	);
