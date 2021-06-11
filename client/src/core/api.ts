@@ -27,6 +27,7 @@ axiosInstance.interceptors.response.use(undefined, ({ response }: AxiosError<IEr
 		relocationOnError(response, ErrorCodesNumbers.InternalServerError);
 		relocationOnError(response, ErrorCodesNumbers.NotFound);
 		relocationOnError(response, ErrorCodesNumbers.Forbidden);
+		relocationOnError(response, ErrorCodesNumbers.Unauthorized);
 	}
 
 	if (response?.data?.message) notifyServerError(response?.data?.message);

@@ -25,4 +25,8 @@ export const ERRORS: Errors = {
 		title: 'Доступ запрещен',
 		desciprtion: ERROR_DESCIPTION,
 	},
+	[ErrorCodes.Unauthorized]: {
+		title: 'Требуется авторизация',
+		desciprtion: ERROR_DESCIPTION,
+	},
 };
