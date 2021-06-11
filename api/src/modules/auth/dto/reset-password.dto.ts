@@ -1,9 +1,16 @@
-import { IsEmail, IsInt, IsNotEmpty, IsNumber, IsString, Length } from 'class-validator';
 import { Type } from 'class-transformer';
 
+import {
+	IsEmail,
+	IsInt,
+	IsNotEmpty,
+	IsNumber,
+	IsString,
+	Length,
+} from '@common/decorators/validator/external';
 import { PASSWORD_CHANGE_CODE_LENGTH } from '@common/constants';
-import { IsEqualTo } from '@common/decorators/is-equal-to.decorator';
-import { LengthNumber } from '@common/decorators/length-number.decorator';
+import { IsEqualTo } from '@common/decorators/validator/is-equal-to.decorator';
+import { LengthNumber } from '@common/decorators/validator/length-number.decorator';
 
 export class ResetPasswordDto {
 	@IsNotEmpty()

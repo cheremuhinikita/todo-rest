@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { IsEmail, IsNotEmpty } from '@common/decorators/validator/external';
 
 export class RecoveryPasswordDto {
 	@IsNotEmpty()

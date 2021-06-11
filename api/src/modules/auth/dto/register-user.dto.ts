@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, Length } from '@common/decorators/validator/external';
 
 export class RegisterUserDto {
 	@IsNotEmpty()

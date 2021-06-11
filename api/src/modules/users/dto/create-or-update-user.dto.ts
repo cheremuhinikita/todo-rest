@@ -1,4 +1,10 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString, Length } from 'class-validator';
+import {
+	IsEmail,
+	IsEnum,
+	IsNotEmpty,
+	IsString,
+	Length,
+} from '@common/decorators/validator/external';
 
 import { Role } from '@common/enums/role.enum';
 
