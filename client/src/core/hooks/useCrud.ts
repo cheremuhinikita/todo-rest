@@ -15,7 +15,7 @@ interface IUserCrudProps<
 > {
 	service: C;
 	onCreate?: (data: T) => Promise<void> | void;
-	onUpdate?: (data: true) => Promise<void> | void;
+	onUpdate?: (data: T) => Promise<void> | void;
 	onRemove?: (data: true) => Promise<void> | void;
 }
 
