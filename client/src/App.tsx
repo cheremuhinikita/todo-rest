@@ -41,17 +41,11 @@ const App: React.FC = () => {
 				path={makeUrl(PageUrls.error, makeParam(ERROR_CODE_KEY))}
 				component={ErrorPage}
 			/>
-			<Route path={[PageUrls.home, PageUrls.users]}>
-				<Layout>
-					<Route exact path={PageUrls.home} component={HomePage} />
-					<Route path={PageUrls.users} component={UsersPage} />
-					<RolesGuardedRoute
-						roles={[Role.USER]}
-						path={PageUrls.todo}
-						component={TodoPage}
-					/>
-				</Layout>
-			</Route>
+			<Layout>
+				<Route exact path={PageUrls.home} component={HomePage} />
+				<Route path={PageUrls.users} component={UsersPage} />
+				<RolesGuardedRoute roles={[Role.USER]} path={PageUrls.todo} component={TodoPage} />
+			</Layout>
 			<Redirect to={PageUrls.home} />
 		</Switch>
 	);
