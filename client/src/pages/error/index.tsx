@@ -18,15 +18,15 @@ export const ErrorPage: React.FC<RouteComponentProps<IParams>> = ({ match: { par
 	const classes = useStyles();
 
 	const code = params[ERROR_CODE_KEY];
-	const { title, desciprtion } = ERRORS[code];
+	const { title, description } = ERRORS[code];
 
 	return (
 		<div className={classes.root}>
 			<Typography component="h1" variant="h2" className={classes.title}>
 				{`${code}: ${title}`}
 			</Typography>
-			<Typography component="h2" variant="h3" className={classes.desciprtion}>
-				{desciprtion}
+			<Typography component="h2" variant="h3" className={classes.description}>
+				{description}
 			</Typography>
 			<Button component={Link} to={PageUrls.home} className={classes.button}>
 				Вернуться на главную

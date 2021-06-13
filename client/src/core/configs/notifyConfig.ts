@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
-import { ToastContainerProps } from 'react-toastify/dist/types';
+import { ToastContainerProps } from 'react-toastify';
 
 export const notifyConfig = {
 	position: 'top-right',

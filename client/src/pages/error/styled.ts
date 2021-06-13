@@ -14,7 +14,7 @@ export default makeStyles({
 		fontWeight: 600,
 		textAlign: 'center',
 	},
-	desciprtion: {
+	description: {
 		marginTop: 10,
 		fontSize: '0.875rem',
 		fontWeight: 500,

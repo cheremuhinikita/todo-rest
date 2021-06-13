@@ -5,28 +5,28 @@ type Errors = Record<
 	ExcludedErrorCodes,
 	{
 		title: string;
-		desciprtion: string;
+		description: string;
 	}
 >;
 
-const ERROR_DESCIPTION =
+const ERROR_DESCRIPTION =
 	'Вы либо попробовали какой-то сомнительный маршрут, либо пришли сюда по ошибке. Что бы это ни было, попробуйте воспользоваться навигацией.';
 
 export const ERRORS: Errors = {
 	[ErrorCodes.InternalServerError]: {
 		title: 'Внутренняя ошибка сервера',
-		desciprtion: ERROR_DESCIPTION,
+		description: ERROR_DESCRIPTION,
 	},
 	[ErrorCodes.NotFound]: {
 		title: 'Страницы, которую вы ищете, здесь нет',
-		desciprtion: ERROR_DESCIPTION,
+		description: ERROR_DESCRIPTION,
 	},
 	[ErrorCodes.Forbidden]: {
 		title: 'Доступ запрещен',
-		desciprtion: ERROR_DESCIPTION,
+		description: ERROR_DESCRIPTION,
 	},
 	[ErrorCodes.Unauthorized]: {
 		title: 'Требуется авторизация',
-		desciprtion: ERROR_DESCIPTION,
+		description: ERROR_DESCRIPTION,
 	},
 };
