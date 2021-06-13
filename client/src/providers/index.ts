@@ -1,5 +1,5 @@
 export * from './RootProvider';
 
 export * from './AuthProvider';
-export * from './ConfirmationDialogProvider';
+export * from './ConfirmDialogProvider';
 export * from './CrudProvider';
