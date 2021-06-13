@@ -6,10 +6,11 @@ import { Auth } from '@common/decorators/auth.decorator';
 import { Role } from '@common/enums/role.enum';
 import { ParamsDto } from '@common/dto/params.dto';
 
+import { Todo } from '@modules/todo/entities/todo.entity';
+
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateOrUpdateUserDto } from './dto/create-or-update-user.dto';
-import { Todo } from '@modules/todo/entities/todo.entity';
 
 @Controller('users')
 export class UsersController extends BaseController implements IBaseCrudController<User> {

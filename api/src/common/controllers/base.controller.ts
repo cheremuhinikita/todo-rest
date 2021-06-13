@@ -25,7 +25,7 @@ export abstract class BaseController {
 
 	async checkUniqueEntity<T>(
 		callback: () => Promise<T> | T,
-		message = "Entity don't unqiue",
+		message = "Entity don't unique",
 	): Promise<void> {
 		const entity = await callback();
 
@@ -35,7 +35,7 @@ export abstract class BaseController {
 	async checkUniqueUpdateEntity<T, U extends keyof T>(
 		callback: () => Promise<T> | T,
 		column: Pick<T, U>,
-		message = "Entity don't unqiue",
+		message = "Entity don't unique",
 	): Promise<void> {
 		const entity = await callback();
 		const [[key, value]] = Object.entries<T[U]>(column);

@@ -7,14 +7,17 @@ import {
 	UpdateEvent,
 } from 'typeorm';
 
+import { RedisCacheService } from '@common/modules/redis-cache/redis-cache.service';
 import { generateHash } from '@common/utils/crypto.utils';
 
 import { User } from '../entities/user.entity';
-import { RedisCacheService } from '@common/modules/redis-cache/redis-cache.service';
 
 @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface<User> {
-	constructor(connection: Connection, private readonly redisCacheService: RedisCacheService) {
+	constructor(
+		private readonly connection: Connection,
+		private readonly redisCacheService: RedisCacheService,
+	) {
 		connection.subscribers.push(this);
 	}
 

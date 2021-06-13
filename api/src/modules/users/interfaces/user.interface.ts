@@ -6,7 +6,7 @@ export interface IUser {
 	email: string;
 	username: string;
 	password: string;
-	passwordСhangeToken?: string;
+	passwordChangeCode?: number;
 	todo: Todo[];
 	role: Role;
 }
