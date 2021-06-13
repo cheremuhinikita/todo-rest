@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import { ConfirmationDialog } from '@components';
 
@@ -36,7 +36,7 @@ export const useConfirmDialog = (): IUseConfirmDialogReturn => {
 		if (dialogActions.onDisagre) dialogActions.onDisagre();
 	};
 
-	const Dialog = useCallback(
+	const Dialog = React.useCallback(
 		() =>
 			React.createElement(ConfirmationDialog, {
 				title,
