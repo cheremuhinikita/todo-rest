@@ -16,12 +16,6 @@ Password: 4nvE3A-ck9kNjd\\\*
 # installation
 $ npm install
 
-# create a database
-$ npm run start:db
-
-# create a redis
-$ npm run start:cache
-
 # start api
 $ npm run start
 ```
