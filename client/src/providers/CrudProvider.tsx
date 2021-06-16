@@ -1,8 +1,7 @@
-/* eslint-disable func-names */
 import React from 'react';
 
 import { IProviderProps, ICrudContext } from '@core/interfaces';
-import { Nullable } from '@core/types';
+import { Nullable, ValueOf } from '@core/types';
 import { useTodo, useUsers } from '@core/hooks';
 import { TODO_KEY, USERS_KEY } from '@core/constants';
 
@@ -10,7 +9,9 @@ const CrudContext = React.createContext<Nullable<ICrudContext>>(null);
 
 CrudContext.displayName = 'Crud';
 
-export const useCrudContext = function <T>(callback: (context: ICrudContext) => T): T {
+export const useCrudContext = <T extends ValueOf<ICrudContext>>(
+	callback: (context: ICrudContext) => T,
+): T => {
 	const context = React.useContext(CrudContext);
 	if (context === null) throw new Error('useCrudContext must be used within CrudContext.');
 
