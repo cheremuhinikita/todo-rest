@@ -17,6 +17,8 @@ export const ButtonSubmit: React.FC<IProps> = ({
 	...otherProps
 }) => (
 	<Button {...otherProps} type="submit">
-		{isLoading ? <CircularProgress color={circularColor} size={circularSize} /> : children}
+		<div>
+			{isLoading ? <CircularProgress color={circularColor} size={circularSize} /> : children}
+		</div>
 	</Button>
 );
