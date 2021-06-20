@@ -5,12 +5,12 @@ import MuiLink, { LinkProps as MuiProps } from '@material-ui/core/Link';
 
 import { PageUrls } from '@core/enums';
 
-type IProps = RouterLinkProps &
+type Props = RouterLinkProps &
 	MuiProps & {
 		to: PageUrls;
 	};
 
-export const Link: React.FC<IProps> = ({ children, ...otherProps }) => (
+export const Link: React.FC<Props> = ({ children, ...otherProps }) => (
 	<MuiLink {...otherProps} component={RouterLink}>
 		{children}
 	</MuiLink>
