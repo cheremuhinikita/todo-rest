@@ -16,6 +16,7 @@ export default makeStyles((theme) => ({
 		marginTop: theme.spacing(3),
 	},
 	submit: {
+		width: 110,
 		margin: theme.spacing(3, 0, 2),
 	},
 	select: {

@@ -2,7 +2,6 @@ import { theme } from '@core/theme';
 import { makeStyles } from '@material-ui/core';
 
 export default makeStyles({
-	root: {},
 	header: {
 		display: 'flex',
 		justifyContent: 'space-between',

@@ -55,7 +55,7 @@ export function Crud<T extends IBaseModel, U extends Record<string, string>>({
 	const updatePath = makeUrl(pageUrl, makeParam(ID_KEY), ModalUrls.update);
 
 	return (
-		<div className={classes.root}>
+		<div>
 			<div className={classes.header}>
 				<Typography component="h1" variant="h2" className={classes.title}>
 					{title}

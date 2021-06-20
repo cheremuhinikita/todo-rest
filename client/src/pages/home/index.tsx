@@ -9,7 +9,7 @@ export const HomePage: React.FC<RouteComponentProps> = () => {
 	const classes = useStyles();
 
 	return (
-		<div className={classes.root}>
+		<div>
 			<Typography component="h1" variant="h2" className={classes.title}>
 				Приложение ToDo
 			</Typography>

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Button, { ButtonProps } from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface IProps extends Omit<ButtonProps, 'type'> {
 	isLoading: boolean;
@@ -17,8 +17,6 @@ export const ButtonSubmit: React.FC<IProps> = ({
 	...otherProps
 }) => (
 	<Button {...otherProps} type="submit">
-		<div>
-			{isLoading ? <CircularProgress color={circularColor} size={circularSize} /> : children}
-		</div>
+		{isLoading ? <CircularProgress color={circularColor} size={circularSize} /> : children}
 	</Button>
 );
