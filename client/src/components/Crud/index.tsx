@@ -48,6 +48,7 @@ export function Crud<T extends IBaseModel, U extends Record<string, string>>({
 	const classes = useStyles();
 	const {
 		findAll: { data, ...restFindAll },
+		remove: { execute: executeRemove, loading: loadingRemove },
 	} = useCrudContext(selectCrudHook(hookKey));
 
 	const createPath = makeUrl(pageUrl, ModalUrls.create);
@@ -71,12 +72,13 @@ export function Crud<T extends IBaseModel, U extends Record<string, string>>({
 						(data as unknown as T[]).map((model) => (
 							<BaseCard
 								key={model.id}
+								isLoadingRemove={loadingRemove}
 								id={model.id}
-								hookKey={hookKey}
 								model={model}
 								actions={actions}
 								component={Card}
 								addActions={AddActions}
+								onRemove={executeRemove}
 							/>
 						))}
 				</Async>

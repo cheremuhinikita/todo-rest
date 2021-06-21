@@ -8,11 +8,11 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { useConfirmDialogContext, useCrudContext } from '@providers';
+import { useConfirmDialogContext } from '@providers';
 import { RolesGuard } from '@core/guards';
 import { ModalUrls } from '@core/enums';
-import { IBaseAddActionsProps, IBaseCardProps, ICrudContext } from '@core/interfaces';
-import { makeUrlModal, selectCrudHook } from '@core/utils';
+import { IBaseAddActionsProps, IBaseCardProps } from '@core/interfaces';
+import { makeUrlModal } from '@core/utils';
 import { IBaseModel } from '@core/models';
 import { Actions } from '@core/types';
 import { MESSAGE_QUESTION_DELETE } from '@core/constants';
@@ -20,34 +20,36 @@ import { MESSAGE_QUESTION_DELETE } from '@core/constants';
 import useStyles from './styled';
 
 interface IProps<T extends IBaseModel> {
+	isLoadingRemove: boolean;
 	id: number;
-	hookKey: keyof ICrudContext;
 	model: T;
 	actions: Actions;
 	component: React.FC<IBaseCardProps<T>>;
 	addActions?: React.FC<IBaseAddActionsProps<T>>;
+	onRemove: (id: number) => Promise<void>;
 }
 
 export function BaseCard<T extends IBaseModel>({
+	isLoadingRemove,
 	id,
-	hookKey,
 	model,
 	actions,
 	component: Component,
 	addActions: AddActions,
+	onRemove,
 }: IProps<T>): React.ReactElement {
 	const classes = useStyles();
+	const confirmDialog = useConfirmDialogContext();
 	const [isRemove, setIsRemove] = React.useState<boolean>(false);
 
-	const confirmDialog = useConfirmDialogContext();
-	const {
-		remove: { execute, loading },
-	} = useCrudContext(selectCrudHook(hookKey));
-
 	const handleRemove = (): void => {
-		const onAgree = () => {
-			setIsRemove(true);
-			execute(id);
+		const onAgree = async () => {
+			try {
+				setIsRemove(true);
+				await onRemove(id);
+			} finally {
+				setIsRemove(false);
+			}
 		};
 
 		confirmDialog(MESSAGE_QUESTION_DELETE, {
@@ -67,13 +69,19 @@ export function BaseCard<T extends IBaseModel>({
 						variant="contained"
 						component={RouterLink}
 						to={makeUrlModal(id.toString(), ModalUrls.update)}
+						className={classes.button}
 					>
-						{isRemove && loading ? <CircularProgress size={24} /> : 'Изменить'}
+						Изменить
 					</Button>
 				</RolesGuard>
 				<RolesGuard roles={actions.delete}>
-					<Button size="small" variant="text" onClick={handleRemove}>
-						Удалить
+					<Button
+						size="small"
+						variant="text"
+						onClick={handleRemove}
+						className={classes.button}
+					>
+						{isRemove && isLoadingRemove ? <CircularProgress size={24} /> : 'Удалить'}
 					</Button>
 				</RolesGuard>
 			</CardActions>

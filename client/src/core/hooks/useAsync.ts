@@ -33,6 +33,7 @@ export const useAsync = <T, U extends unknown[] = []>(
 			} catch (err) {
 				setError(err);
 				if (onError) onError(err);
+				throw err;
 			} finally {
 				setLoading(false);
 			}

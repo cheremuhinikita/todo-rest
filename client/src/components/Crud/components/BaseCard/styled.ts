@@ -15,4 +15,7 @@ export default makeStyles({
 	pos: {
 		marginBottom: 12,
 	},
+	button: {
+		width: 93,
+	},
 });
