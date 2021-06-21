@@ -28,13 +28,13 @@ export function BaseUpdateModal<T extends IBaseModel, U extends Record<string, s
 }: IProps<T, U>): React.ReactElement {
 	const history = useHistory();
 	const {
-		update,
-		findOne: { execute, data, loading, error },
+		update: { execute: executeCreate },
+		findOne: { execute: executeFindOne, data, loading, error },
 	} = useCrudContext(selectCrudHook(hookKey));
 
 	const { id } = useParams<IParams>();
 	const handleUpdate = async (formValues: U): Promise<void> => {
-		await (update as unknown as (id: number, formValues: U) => Promise<void>)(
+		await (executeCreate as unknown as (id: number, formValues: U) => Promise<void>)(
 			Number(id),
 			formValues,
 		);
@@ -47,7 +47,7 @@ export function BaseUpdateModal<T extends IBaseModel, U extends Record<string, s
 			<DialogContent dividers>
 				<Async
 					strictMode
-					execute={() => execute(Number(id))}
+					execute={() => executeFindOne(Number(id))}
 					data={data}
 					loading={loading}
 					error={error}

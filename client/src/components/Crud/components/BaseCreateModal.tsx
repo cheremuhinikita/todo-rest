@@ -19,10 +19,12 @@ export function BaseCreateModal<T extends Record<string, string>>({
 	form: Form,
 }: IProps<T>): React.ReactElement {
 	const history = useHistory();
-	const { create } = useCrudContext(selectCrudHook(hookKey));
+	const {
+		create: { execute },
+	} = useCrudContext(selectCrudHook(hookKey));
 
 	const handleCreate = async (data: T): Promise<void> => {
-		await (create as unknown as (data: T) => Promise<void>)(data);
+		await (execute as unknown as (data: T) => Promise<void>)(data);
 		history.goBack();
 	};
 

@@ -20,11 +20,11 @@ interface IUserCrudProps<
 }
 
 export interface IUseCrudReturn<T extends IBaseModel, U extends Record<string, string>> {
-	create: (data: U) => Promise<void>;
+	create: IAsync<T, [U]>;
 	findAll: IAsync<T[]>;
-	findOne: IAsync<T>;
-	update: (id: number, data: U) => Promise<void>;
-	remove: (id: number) => Promise<void>;
+	findOne: IAsync<T, [number]>;
+	update: IAsync<T, [number, U]>;
+	remove: IAsync<true, [number]>;
 }
 
 export const useCrud = <
@@ -39,15 +39,12 @@ export const useCrud = <
 }: IUserCrudProps<T, U, C>): IUseCrudReturn<T, U> => {
 	const { execute: executeFindAll, ...restFindAll } = useAsync(() => service.findAll());
 
-	const create = React.useCallback(async (data: U) => {
-		try {
-			const response = await service.create(data);
+	const create = useAsync((data: U) => service.create(data), {
+		onSuccess: async (data: T) => {
 			await executeFindAll();
-			await onCreate(response);
-		} catch (err) {
-			throw err;
-		}
-	}, []);
+			await onCreate(data);
+		},
+	});
 
 	const findAll = React.useMemo(
 		() => ({ execute: executeFindAll, ...restFindAll }),
@@ -56,25 +53,19 @@ export const useCrud = <
 
 	const findOne = useAsync((id: number) => service.findOne(id));
 
-	const update = React.useCallback(async (id: number, data: U) => {
-		try {
-			const response = await service.update(id, data);
+	const update = useAsync((id: number, data: U) => service.update(id, data), {
+		onSuccess: async (data: T) => {
 			await executeFindAll();
-			await onUpdate(response);
-		} catch (err) {
-			throw err;
-		}
-	}, []);
+			await onUpdate(data);
+		},
+	});
 
-	const remove = React.useCallback(async (id: number) => {
-		try {
-			const response = await service.delete(id);
+	const remove = useAsync((id: number) => service.delete(id), {
+		onSuccess: async (data: true) => {
 			await executeFindAll();
-			await onRemove(response);
-		} catch (err) {
-			throw err;
-		}
-	}, []);
+			await onRemove(data);
+		},
+	});
 
 	return {
 		create,

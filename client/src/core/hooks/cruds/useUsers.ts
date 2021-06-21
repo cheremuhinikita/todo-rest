@@ -14,7 +14,7 @@ import { useAsync } from '../useAsync';
 import { IUseCrudReturn, useCrud } from '../useCrud';
 
 export interface IUseUsersReturn extends IUseCrudReturn<IUserModel, ICreateOrUpdateUserForm> {
-	findTodo: IAsync<ITodoModel[]>;
+	findTodo: IAsync<ITodoModel[], [number]>;
 }
 
 export const useUsers = (): IUseUsersReturn => {
